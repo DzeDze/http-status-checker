@@ -43,7 +43,11 @@ def check_urls(urls: list[str], timeout: int = 5) -> dict[str, str]:
                 f"An unexpected error occurred while checking {url}: {e}", 
                 exc_info=True,
             )
-
+        except Exception as e:
+            status = f"Error: {type(e).__name__}"
+            logger.error(
+                f"An unexpected error occurred while checking {url}: {e}", 
+            )
         results[url] = status
         logger.debug(f"Checked URL: {url:<40} - Status: {status}")
     return results
