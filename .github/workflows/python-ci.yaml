@@ -1,0 +1,21 @@
+name: CI/CD for http-status-checker
+
+on:
+  push:
+    branches: ['main']
+    workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubtuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Display Python version and location
+        run: |
+          python --version
+          which python
