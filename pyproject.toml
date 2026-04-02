@@ -24,6 +24,7 @@ dev = [
     "types-requests"
 ]
 [project.scripts]
+check-urls = "http_status_checker.cli:main"
 
 [tools.ruff]
 line-length = 65
