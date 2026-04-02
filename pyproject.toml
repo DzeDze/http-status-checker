@@ -13,5 +13,15 @@ dependencies = [
     "click>=8.0, <9.0"
 ]
 
+[project.optional-dependencies]
+dev = [
+    "ruff",
+    "black",
+]
 [project.scripts]
-check-urls = "http_status_checker.cli:main"
+
+[tools.ruff]
+line-length = 65
+
+[tool.black]
+line-length = 65
