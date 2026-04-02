@@ -6,7 +6,7 @@ on:
     workflow_dispatch:
 
 jobs:
-  build-and-test:
+  lint-static-type-security-checks:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -33,3 +33,30 @@ jobs:
       - name: Security checks
         run: |
           bandit -c pyproject.toml -r .
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.10, 3.11, 3.12]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install ".[dev]"
+      - name: Automated tests with pytest
+        run: |
+          pytest
+  release:
+    runs-on: ubuntu-latest
+    needs:
+      - tests
+      - lint-static-type-security-checks
+    steps:
+      - name: Release
+        run: echo "Release"
